@@ -1,0 +1,53 @@
+# COMP229 - Web Application Development
+# Project: IncidentFlow - Incident Management System
+#
+# Team Members:
+# Ivan Seck Ali - 301501210
+# Robel Teffera - 301113578
+# Ryan Sunil - 301495962
+# Bronson Pearl - 301328703
+#
+# Description:
+# This file is part of the IncidentFlow MERN application.
+
+name: CI
+
+# when it runs
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# ---------- JOB ----------
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    env:
+      # don't download the Cypress app on the CI server, we only need it locally
+      CYPRESS_INSTALL_BINARY: 0
+    steps:
+      # get the code and set up Node 20 with npm caching
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            client/package-lock.json
+
+      # install packages for the server and the client
+      - name: Install API dependencies
+        run: npm ci
+      - name: Install client dependencies
+        run: npm --prefix client ci
+
+      # run the tests and build, any failure fails the whole job
+      - name: API unit + integration tests (in-memory MongoDB)
+        run: npm run test:server
+      - name: Client component tests
+        run: npm run test:client
+      - name: Production build
+        run: npm --prefix client run build

@@ -1,0 +1,41 @@
+# COMP229 - Web Application Development
+# Project: IncidentFlow - Incident Management System
+#
+# Team Members:
+# Ivan Seck Ali - 301501210
+# Robel Teffera - 301113578
+# Ryan Sunil - 301495962
+# Bronson Pearl - 301328703
+#
+# Description:
+# This file is part of the IncidentFlow MERN application.
+
+# ---------- SERVICE ----------
+
+services:
+  - type: web
+    name: incidentflow
+    runtime: node
+    plan: free
+    branch: main
+    autoDeploy: true   # redeploy on every merge to main
+
+    # install, build the React site, then start the server
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health   # Render pings this to know the app is up
+
+    # ---------- ENVIRONMENT VARIABLES ----------
+
+    # sync: false means we type the value in the Render dashboard (secrets never go in GitHub)
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true   # Render makes a random JWT secret for us
+      - key: CLIENT_URL
+        sync: false
+      - key: UPLOAD_DIR
+        value: /tmp/uploads

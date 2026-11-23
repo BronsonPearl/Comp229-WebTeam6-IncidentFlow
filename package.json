@@ -1,0 +1,43 @@
+{
+  "name": "incidentflow",
+  "version": "1.0.0",
+  "description": "IncidentFlow - Report. Track. Resolve. A MERN incident management platform by Web Team Six.",
+  "type": "module",
+  "private": true,
+  "main": "server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "concurrently -n api,web -c cyan,magenta \"npm run server:dev\" \"npm run client:dev\"",
+    "server:dev": "node --watch server.js",
+    "client:dev": "npm --prefix client run dev",
+    "start": "node server.js",
+    "build": "npm --prefix client install --include=dev && npm --prefix client run build",
+    "seed": "node server/utils/seed.js",
+    "test": "npm run test:server && npm run test:client",
+    "test:server": "node --test \"tests/**/*.test.js\"",
+    "test:unit": "node --test \"tests/unit/*.test.js\"",
+    "test:client": "npm --prefix client run test",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "express-rate-limit": "^7.4.1",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.8.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "cypress": "^13.15.2",
+    "mongodb-memory-server": "^10.1.2",
+    "supertest": "^7.0.0"
+  }
+}
