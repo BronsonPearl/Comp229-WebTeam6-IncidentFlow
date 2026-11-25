@@ -57,7 +57,7 @@ export default function Home() {
             <p className="tagline">Report. Track. Resolve.</p>
             <p className="lead">
               A calm, professional console for reporting operational incidents, assigning the right technician,
-              and following every step from first report to final resolution.
+              and following every step from first report to final resolution.  Audited the CI/CD By Bronson Pearl. 
             </p>
             <div className="hero-ctas">
               {/* different buttons if you are already signed in */}
